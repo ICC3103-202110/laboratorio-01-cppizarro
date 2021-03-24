@@ -48,13 +48,20 @@ puntos = {"Jugador 1":0, "Jugador 2":0 }
 def juego(tablero1,tablero2,k,puntos):
     jugadores = ["Jugador 1", "Jugador 2"]
     turno = jugadores[k]
-    if all(type(i) is list for i in tablero1) and all(type(j) is str for j in i in tablero1):
-        print(puntos)
-        if puntos["Jugador 1"] > puntos["Jugador 2"]:
-            print("El ganador es Jugador 1")
+    n = 0
+    while n < len(tablero1):
+        i = tablero1[n]
+        if all(type(j) is str for j in i):
+            print(puntos)
+            if puntos["Jugador 1"] > puntos["Jugador 2"]:
+                print("El ganador es Jugador 1")
+            else:
+                print("El ganador es Jugador 2")
+            n += 1
+            if n == len(tablero1):
+                return
         else:
-            print("El ganador es Jugador 2")
-        return
+            break
                     
     print('\n',"Juega: " , turno, '\n')
 
@@ -104,6 +111,4 @@ def juego(tablero1,tablero2,k,puntos):
 print(tablero2)
 juego(tablero1,tablero2,k,puntos)
 
-#CORREGIR CUANDO SE TERMINA LA RECURSIVIDAD DE LA FUNCION
-#CORREGIR COMO FUNCIONAN LOS PUNTOS PORQUE NO ESTA SUMANDO
 #MEJORAR COMO SE VE CUANDO SE IMPRIME
