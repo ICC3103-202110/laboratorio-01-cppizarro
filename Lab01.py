@@ -9,8 +9,6 @@ for i in range(1, cant_cartas + 1):
 
 np.random.shuffle(cartas)
 
-print(cartas)
-
 tablero1 = []
 tablero2 = []
 
@@ -42,5 +40,3 @@ while j < filas:
         k += 1
     tablero2.append(fila)
     j += 1
-
-##############################################################
