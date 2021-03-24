@@ -44,7 +44,7 @@ def boards(number_of_cards):
             k += 1
         board2.append(row)
         j += 1
-      return board1, board2
+    return board1, board2
 
 ################    JUEGO    ################
 k = 0
@@ -62,15 +62,16 @@ def game(board1,board2,k,points):
                 x = 1
             n += 1
             if n == len(board1):
+                print("\n", "El ganador es: ", end="")
                 if x == 0:
-                    print("\n", "El ganador es: Jugador 1")
+                    print("\033[1;31m"+"Jugador 1"+"\033[0;m") 
                 if x == 1:
-                    print("\n", "El ganador es: Jugador 2")
+                    print("\033[1;31m"+"Jugador 2"+"\033[0;m")
                 return
         else:
             break
 
-    print("\n","Juega: " , turn, "\n")
+    print("\n","Juega: " , "\033[1;32m"+turn+"\033[0;m", "\n")
 
     print(tabulate(board1, tablefmt = 'fancy_grid'))
 
