@@ -1,114 +1,112 @@
+#Al jugar las coordenadas se escriben sin los parentesis
+
 import numpy as np
+from tabulate import tabulate
 
-cant_cartas = int(input("Numero de cartas a jugar: "))
+number_of_cards = int(input("Numero de cartas a jugar: "))
 
-cartas = []
-for i in range(1, cant_cartas + 1):
-    cartas.append(i)
-    cartas.append(i)
+cards = []
+for i in range(1, number_of_cards + 1):
+    cards.append(i)
+    cards.append(i)
 
-np.random.shuffle(cartas)
+np.random.shuffle(cards)
 
-tablero1 = []
-tablero2 = []
+board1 = []
+board2 = []
 
-columnas = 4
-filas = (cant_cartas*2)/columnas
+columns = 4
+rows = (number_of_cards*2)/columns
 
 i = 0
 j = 0
-while j < filas:
-    fila = []
+while j < rows:
+    row = []
     k = 0
-    while i < len(cartas) and k < columnas:
+    while i < len(cards) and k < columns:
         f = str(j)
         c = str(k)
-        fila.append((j,k))
+        row.append((j,k))
         i += 1
         k += 1
-    tablero1.append(fila)
+    board1.append(row)
     j += 1
 
 i = 0
 j = 0
-while j < filas:
-    fila = []
+while j < rows:
+    row = []
     k = 0
-    while i < len(cartas) and k < columnas:
-        fila.append(cartas[i])
+    while i < len(cards) and k < columns:
+        row.append(cards[i])
         i += 1
         k += 1
-    tablero2.append(fila)
+    board2.append(row)
     j += 1
 
 #################################################
 
 k = 0
-puntos = {"Jugador 1":0, "Jugador 2":0 }
-def juego(tablero1,tablero2,k,puntos):
-    jugadores = ["Jugador 1", "Jugador 2"]
-    turno = jugadores[k]
+points = {"Jugador 1":0, "Jugador 2":0 }
+def game(board1,board2,k,points):
+    players = ["Jugador 1", "Jugador 2"]
+    turn = players[k]
     n = 0
-    while n < len(tablero1):
-        i = tablero1[n]
+    while n < len(board1):
+        i = board1[n]
         if all(type(j) is str for j in i):
-            print(puntos)
-            if puntos["Jugador 1"] > puntos["Jugador 2"]:
-                print("El ganador es Jugador 1")
+            print(points)
+            if points["Jugador 1"] > points["Jugador 2"]:
+                print("\n", "El ganador es: Jugador 1")
             else:
-                print("El ganador es Jugador 2")
+                print("\n", "El ganador es: Jugador 2")
             n += 1
-            if n == len(tablero1):
+            if n == len(board1):
                 return
         else:
             break
-                    
-    print('\n',"Juega: " , turno, '\n')
 
-    for i in tablero1:
-        print(*i)
+    print("\n","Juega: " , turn, "\n")
 
-    c1 = input("Coordenadas: ")
+    print(tabulate(board1, tablefmt = 'fancy_grid'))
+
+    c1 = input("Coordenadas primera carta: ")
     c = c1.split(',')
     x1 = int(c[0])
     y1 = int(c[1])
-    tablero1[x1][y1] = tablero2[x1][y1]
-    carta1 = tablero2[x1][y1]
+    board1[x1][y1] = board2[x1][y1]
+    card1 = board2[x1][y1]
 
-    for i in tablero1:
-        print(*i)
+    print(tabulate(board1, tablefmt = 'fancy_grid'))
 
-    c2 = input("Coordenadas: ")
+    c2 = input("Coordenadas segunda carta: ")
     c = c2.split(",")
     x2 = int(c[0])
     y2 = int(c[1])
-    tablero1[x2][y2] = tablero2[x2][y2]
-    carta2 = tablero2[x2][y2]
+    board1[x2][y2] = board2[x2][y2]
+    card2 = board2[x2][y2]
 
-    for i in tablero1:
-        print(*i)
+    print(tabulate(board1, tablefmt = 'fancy_grid'))
 
-    if carta1 == carta2:
-        puntos[turno] = puntos[turno] + 1
-        tablero1[x1][y1] = "    "
-        tablero1[x2][y2] = "    "
+    if card1 == card2:
+        points[turn] = points[turn] + 1
+        board1[x1][y1] = ""
+        board1[x2][y2] = ""
         if k == 0:
             k = 0
         elif k == 1:
             k = 1
-        juego(tablero1, tablero2, k, puntos)
+        game(board1, board2, k, points)
         
-    if carta1 != carta2:
-        tablero1[x1][y1] = ((x1,y1))
-        tablero1[x2][y2] = ((x2,y2))
+    if card1 != card2:
+        board1[x1][y1] = ((x1,y1))
+        board1[x2][y2] = ((x2,y2))
         if k == 0:
             k = 1
         elif k == 1:
             k = 0
-        juego(tablero1, tablero2, k, puntos)
+        game(board1, board2, k, points)
     
 
-print(tablero2)
-juego(tablero1,tablero2,k,puntos)
-
-#MEJORAR COMO SE VE CUANDO SE IMPRIME
+print(tabulate(board2))
+game(board1,board2,k,points)
