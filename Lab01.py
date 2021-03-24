@@ -40,3 +40,70 @@ while j < filas:
         k += 1
     tablero2.append(fila)
     j += 1
+
+#################################################
+
+k = 0
+puntos = {"Jugador 1":0, "Jugador 2":0 }
+def juego(tablero1,tablero2,k,puntos):
+    jugadores = ["Jugador 1", "Jugador 2"]
+    turno = jugadores[k]
+    if all(type(i) is list for i in tablero1) and all(type(j) is str for j in i in tablero1):
+        print(puntos)
+        if puntos["Jugador 1"] > puntos["Jugador 2"]:
+            print("El ganador es Jugador 1")
+        else:
+            print("El ganador es Jugador 2")
+        return
+                    
+    print('\n',"Juega: " , turno, '\n')
+
+    for i in tablero1:
+        print(*i)
+
+    c1 = input("Coordenadas: ")
+    c = c1.split(',')
+    x1 = int(c[0])
+    y1 = int(c[1])
+    tablero1[x1][y1] = tablero2[x1][y1]
+    carta1 = tablero2[x1][y1]
+
+    for i in tablero1:
+        print(*i)
+
+    c2 = input("Coordenadas: ")
+    c = c2.split(",")
+    x2 = int(c[0])
+    y2 = int(c[1])
+    tablero1[x2][y2] = tablero2[x2][y2]
+    carta2 = tablero2[x2][y2]
+
+    for i in tablero1:
+        print(*i)
+
+    if carta1 == carta2:
+        puntos[turno] = puntos[turno] + 1
+        tablero1[x1][y1] = "    "
+        tablero1[x2][y2] = "    "
+        if k == 0:
+            k = 0
+        elif k == 1:
+            k = 1
+        juego(tablero1, tablero2, k, puntos)
+        
+    if carta1 != carta2:
+        tablero1[x1][y1] = ((x1,y1))
+        tablero1[x2][y2] = ((x2,y2))
+        if k == 0:
+            k = 1
+        elif k == 1:
+            k = 0
+        juego(tablero1, tablero2, k, puntos)
+    
+
+print(tablero2)
+juego(tablero1,tablero2,k,puntos)
+
+#CORREGIR CUANDO SE TERMINA LA RECURSIVIDAD DE LA FUNCION
+#CORREGIR COMO FUNCIONAN LOS PUNTOS PORQUE NO ESTA SUMANDO
+#MEJORAR COMO SE VE CUANDO SE IMPRIME
