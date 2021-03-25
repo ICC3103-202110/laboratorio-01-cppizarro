@@ -1,7 +1,8 @@
 #Al jugar las coordenadas se escriben sin los parentesis
 #Se asume que lo que ingrese el usuario va a ser correcto (no 
 # va a poner coordenadas donde ya no hay cartas, coordenadas 
-# que no existan o la misma coordenada dos veces)
+# que no existan o la misma coordenada dos veces), y que el 
+#numero de cartas ingresado será valida (cant de cartas > 0)
 
 import numpy as np
 from tabulate import tabulate
@@ -14,9 +15,9 @@ def boards(number_of_cards):
         cards.append(i)
     np.random.shuffle(cards)
 
-    columns = 4
+    columns = 5
     rows = (number_of_cards*2)/columns
-
+    #Tablero con el valor de las cartas censurado
     board1 = []
     i = 0
     j = 0
@@ -31,7 +32,8 @@ def boards(number_of_cards):
             k += 1
         board1.append(row)
         j += 1
-
+    #Tablero que contiene las cartas con las cuales se
+    #comparan las coordenadas ingresadas en el juego
     board2 = []
     i = 0
     j = 0
@@ -52,26 +54,22 @@ points = {"Jugador 1":0, "Jugador 2":0 }
 def game(board1,board2,k,points):
     players = ["Jugador 1", "Jugador 2"]
     turn = players[k]
+    #Condicion para romper la recursividad de la funcion
     n = 0
     while n < len(board1):
         i = board1[n]
         if all(type(j) is str for j in i):
-            if points["Jugador 1"] > points["Jugador 2"]:
-                x = 0
-            else:
-                x = 1
-            n += 1
+            n += 1 
             if n == len(board1):
-                print("\n", "El ganador es: ", end="")
-                if x == 0:
-                    print("\033[1;31m"+"Jugador 1"+"\033[0;m") 
-                if x == 1:
-                    print("\033[1;31m"+"Jugador 2"+"\033[0;m")
+                if points["Jugador 1"] > points["Jugador 2"]:
+                    print("\n", "El ganador es: Jugador 1", "\n")
+                else:
+                    print("\n", "El ganador es: Jugador 2", "\n")
                 return
         else:
             break
 
-    print("\n","Juega: " , "\033[1;32m"+turn+"\033[0;m", "\n")
+    print("\n","Juega: " , turn, "\n")
 
     print(tabulate(board1, tablefmt = 'fancy_grid'))
 
@@ -92,7 +90,8 @@ def game(board1,board2,k,points):
     card2 = board2[x2][y2]
 
     print(tabulate(board1, tablefmt = 'fancy_grid'))
-
+    #Se compara el valor de ambas cartas y se define de quien
+    #es el siguiente turno
     if card1 == card2:
         points[turn] = points[turn] + 1
         board1[x1][y1] = ""
@@ -110,7 +109,7 @@ def game(board1,board2,k,points):
             k = 0
     game(board1, board2, k, points)
 
-###########################################################
+##### LLAMADA DE LAS FUNCNIOINES PARA JUGAR #####
 number_of_cards = int(input("Numero de cartas a jugar: "))
 board1 = boards(number_of_cards)[0]
 board2 = boards(number_of_cards)[1]
