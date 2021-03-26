@@ -1,8 +1,8 @@
-#Al jugar las coordenadas se escriben sin los parentesis
+#Al jugar las coordenadas se escriben sin los parentesis.
 #Se asume que lo que ingrese el usuario va a ser correcto (no 
 # va a poner coordenadas donde ya no hay cartas, coordenadas 
 # que no existan o la misma coordenada dos veces), y que el 
-#numero de cartas ingresado será valida (cant de cartas > 0)
+#numero de cartas ingresado será valida (cant de cartas > 0).
 
 import numpy as np
 from tabulate import tabulate
